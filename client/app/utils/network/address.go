@@ -25,7 +25,7 @@ func GetMacAddress() (string, error) {
 	return address[0], nil
 }
 
-func GetLocalIP() net.IP {
+func GetLocalIP() string {
 	// conn, err := net.Dial(`udp`, `8.8.8.8:80`)
 	// if err != nil {
 	// 	log.Fatal(err)
@@ -46,5 +46,5 @@ func GetLocalIP() net.IP {
 		log.Fatal("读取响应体失败: ", err)
 	}
 
-	return body
+	return string(body)
 }
