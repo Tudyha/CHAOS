@@ -3,6 +3,9 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"time"
+
 	"github.com/gorilla/websocket"
 	"github.com/tiagorlampert/CHAOS/client/app/entities"
 	"github.com/tiagorlampert/CHAOS/client/app/environment"
@@ -10,8 +13,6 @@ import (
 	ws "github.com/tiagorlampert/CHAOS/client/app/infrastructure/websocket"
 	"github.com/tiagorlampert/CHAOS/client/app/services"
 	"github.com/tiagorlampert/CHAOS/client/app/utils/encode"
-	"net/http"
-	"time"
 )
 
 type Handler struct {
@@ -53,13 +54,13 @@ func (h *Handler) KeepConnection() {
 			continue
 		}
 
-		err = h.SendDeviceSpecs()
-		if err != nil {
-			h.Log("[!] Error connecting with server: " + err.Error())
-			h.Connected = false
-			time.Sleep(sleepTime)
-			continue
-		}
+		// err = h.SendDeviceSpecs()
+		// if err != nil {
+		// 	h.Log("[!] Error connecting with server: " + err.Error())
+		// 	h.Connected = false
+		// 	time.Sleep(sleepTime)
+		// 	continue
+		// }
 
 		h.Connected = true
 	}

