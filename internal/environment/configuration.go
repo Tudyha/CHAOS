@@ -9,6 +9,7 @@ type Configuration struct {
 	Server    Server
 	Database  Database
 	SecretKey string `envconfig:"SECRET_KEY"`
+	// Wechat    Wechat
 }
 
 type Server struct {
@@ -19,6 +20,12 @@ type Database struct {
 	Sqlite   Sqlite
 	Postgres Postgres
 }
+
+// type Wechat struct {
+// 	CORPID     string `envconfig:"WECHAT_CORP_ID"`
+// 	CORPSECRET string `envconfig:"WECHAT_CORP_SECRET"`
+// 	AGENTID    string `envconfig:"WECHAT_AGENT_ID"`
+// }
 
 func Load() (*Configuration, error) {
 	configuration := &Configuration{}

