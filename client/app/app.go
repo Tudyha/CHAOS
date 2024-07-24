@@ -56,9 +56,9 @@ func New(configuration *environment.Configuration) *App {
 func (a *App) Run() {
 	g, _ := errgroup.WithContext(context.Background())
 
-	if err := a.Handler.SendDeviceSpecs(); err != nil {
-		log.Fatal("error running client: ", err)
-	}
+	// if err := a.Handler.SendDeviceSpecs(); err != nil {
+	// 	log.Fatal("error running client: ", err)
+	// }
 
 	g.Go(func() error {
 		a.Handler.KeepConnection()

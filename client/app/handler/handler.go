@@ -54,13 +54,13 @@ func (h *Handler) KeepConnection() {
 			continue
 		}
 
-		// err = h.SendDeviceSpecs()
-		// if err != nil {
-		// 	h.Log("[!] Error connecting with server: " + err.Error())
-		// 	h.Connected = false
-		// 	time.Sleep(sleepTime)
-		// 	continue
-		// }
+		err = h.SendDeviceSpecs()
+		if err != nil {
+			h.Log("[!] Error connecting with server: " + err.Error())
+			h.Connected = false
+			time.Sleep(sleepTime)
+			continue
+		}
 
 		h.Connected = true
 	}
