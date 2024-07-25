@@ -2,10 +2,11 @@ package device
 
 import (
 	"errors"
+	"time"
+
 	"github.com/tiagorlampert/CHAOS/entities"
 	"github.com/tiagorlampert/CHAOS/repositories"
 	"gorm.io/gorm"
-	"time"
 )
 
 type deviceRepository struct {
@@ -42,8 +43,11 @@ func (r deviceRepository) FindByMacAddress(address string) (*entities.Device, er
 
 func (r deviceRepository) FindAll(updatedAt time.Time) ([]entities.Device, error) {
 	var devices []entities.Device
-	if err := r.dbClient.Where(
-		"fetched_unix >= ?", updatedAt.Unix()).Find(&devices).Error; err != nil {
+	// if err := r.dbClient.Where(
+	// 	"fetched_unix >= ?", updatedAt.Unix()).Find(&devices).Error; err != nil {
+	// 	return nil, err
+	// }
+	if err := r.dbClient.Find(&devices).Error; err != nil {
 		return nil, err
 	}
 	return devices, nil
